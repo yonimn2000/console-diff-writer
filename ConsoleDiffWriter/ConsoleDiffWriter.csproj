@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>YonatanMankovich.$(MSBuildProjectName)</AssemblyName>
+    <RootNamespace>YonatanMankovich.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Company>$(Authors)</Company>
+    <Copyright>Copyright © $(Authors) 2022</Copyright>
+    <Authors>Yonatan Mankovich</Authors>
+  </PropertyGroup>
+
+</Project>
