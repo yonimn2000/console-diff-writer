@@ -36,6 +36,17 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
         }
 
         /// <summary>
+        /// Initializes an instance of the <see cref="ConsoleCharacter"/> class with 
+        /// a blank (space) character and a background color.
+        /// </summary>
+        /// <param name="backColor">The background color of the character as will be displayed in the console.</param>
+        public ConsoleCharacter(ConsoleColor? backColor = null)
+        {
+            Character = ' ';
+            BackColor = backColor;
+        }
+
+        /// <summary>
         /// Writes the current <see cref="ConsoleCharacter"/> to the console.
         /// </summary>
         public void Write()
