@@ -1,9 +1,10 @@
-﻿using System.Drawing;
+﻿using System.Collections;
+using System.Drawing;
 using YonatanMankovich.ConsoleDiffWriter.Data;
 
 namespace YonatanMankovich.ConsoleDiffWriter.Diff
 {
-    public class ConsoleDiffLines
+    public class ConsoleDiffLines : IEnumerable<ConsoleDiffString>
     {
         public Point Point { get; }
         private IList<ConsoleDiffString> WrittenLines { get; set; }
@@ -44,6 +45,16 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
                 new ConsoleString(new string(' ', WrittenLines[i].Length)).WriteAtPoint(new Point(Point.X, Point.Y + i));
                 WrittenLines.RemoveAt(lines.Count); // Remove last element.
             }
+        }
+
+        public IEnumerator<ConsoleDiffString> GetEnumerator()
+        {
+            return WrittenLines.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable)WrittenLines).GetEnumerator();
         }
     }
 }

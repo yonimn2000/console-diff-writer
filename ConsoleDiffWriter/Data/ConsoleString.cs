@@ -1,8 +1,9 @@
-﻿using System.Drawing;
+﻿using System.Collections;
+using System.Drawing;
 
 namespace YonatanMankovich.ConsoleDiffWriter.Data
 {
-    public class ConsoleString
+    public class ConsoleString : IEnumerable<ConsoleCharacter>
     {
         private IList<ConsoleCharacter> Characters { get; set; }
         public int Length => Characters.Count;
@@ -78,6 +79,16 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
         public override string? ToString()
         {
             return new string(Characters.Select(c => c.Character).ToArray());
+        }
+
+        public IEnumerator<ConsoleCharacter> GetEnumerator()
+        {
+            return Characters.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable)Characters).GetEnumerator();
         }
     }
 }
