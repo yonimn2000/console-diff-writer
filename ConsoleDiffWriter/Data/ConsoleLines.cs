@@ -51,6 +51,51 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
         }
 
         /// <summary>
+        /// Adds a blank line to the end of the current <see cref="ConsoleLines"/> structure.
+        /// </summary>
+        /// <returns>The updated self.</returns>
+        public ConsoleLines AddLine()
+        {
+            Lines.Add(new ConsoleString());
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a <see cref="ConsoleCharacter"/> to the end of the last line
+        /// of the current <see cref="ConsoleLines"/> structure.
+        /// </summary>
+        /// <param name="character">The <see cref="ConsoleString"/> to add.</param>
+        /// <returns>The updated self.</returns>
+        public ConsoleLines AppendLastLine(ConsoleCharacter character)
+        {
+            GetLastLine().Append(character);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a <see cref="ConsoleString"/> to the end of the last line
+        /// of the current <see cref="ConsoleLines"/> structure.
+        /// </summary>
+        /// <param name="str">The <see cref="ConsoleString"/> to add.</param>
+        /// <returns>The updated self.</returns>
+        public ConsoleLines AppendLastLine(ConsoleString str)
+        {
+            GetLastLine().Append(str);
+            return this;
+        }
+
+        /// <summary>
+        /// Gets the last <see cref="ConsoleString"/> line of the current <see cref="ConsoleLines"/> structure. 
+        /// </summary>
+        /// <returns>The last <see cref="ConsoleString"/> line of the current <see cref="ConsoleLines"/> structure.</returns>
+        public ConsoleString GetLastLine()
+        {
+            if (Count == 0)
+                AddLine();
+            return Lines[Lines.Count - 1];
+        }
+
+        /// <summary>
         /// Writes the current <see cref="ConsoleLines"/> to the console.
         /// </summary>
         public void Write()
