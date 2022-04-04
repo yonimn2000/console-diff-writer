@@ -54,10 +54,7 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
 
             // Write the diff between all the lines of the two areas.
             for (int i = 0; i < lines.Count; i++)
-            {
                 WrittenLines[i].WriteDiff(lines[i]);
-                Console.WriteLine();
-            }
 
             // If the new area has less lines than the written one,
             // overwrite the old extra lines with spaces and remove them from the list of written lines.
