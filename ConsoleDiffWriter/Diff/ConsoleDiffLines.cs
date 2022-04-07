@@ -58,12 +58,18 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
 
             // If the new area has less lines than the written one,
             // overwrite the old extra lines with spaces and remove them from the list of written lines.
-            int originalDrawnLinesCount = WrittenLines.Count;
-            for (int i = lines.Count; i < originalDrawnLinesCount; i++)
-            {
+            for (int i = lines.Count; i < WrittenLines.Count; i++)
                 new ConsoleString(new string(' ', WrittenLines[i].Length)).WriteAtPoint(new Point(Point.X, Point.Y + i));
+            for (int i = lines.Count; i < WrittenLines.Count; i++)
                 WrittenLines.RemoveAt(lines.Count); // Remove last element.
-            }
+        }
+
+        /// <summary>
+        /// Clears the console area where the lines were written.
+        /// </summary>
+        public void Clear()
+        {
+            WriteDiff(new ConsoleLines());
         }
 
         /// <summary>

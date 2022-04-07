@@ -73,6 +73,14 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
         }
 
         /// <summary>
+        /// Clears the console area where the string was written.
+        /// </summary>
+        public void Clear()
+        {
+            WriteDiff(new ConsoleString());
+        }
+
+        /// <summary>
         /// Gets the written <see cref="ConsoleString"/>.
         /// </summary>
         /// <returns>The written <see cref="ConsoleString"/>.</returns>

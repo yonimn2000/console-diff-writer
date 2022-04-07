@@ -59,6 +59,14 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
         }
 
         /// <summary>
+        /// Clears the console area where the character was written.
+        /// </summary>
+        public void Clear()
+        {
+            WriteDiff(new ConsoleCharacter());
+        }
+
+        /// <summary>
         /// Compares the given <paramref name="character"/> to the <see cref="WrittenCharacter"/>.
         /// </summary>
         /// <param name="character">The new character to compare the <see cref="WrittenCharacter"/> with.</param>
