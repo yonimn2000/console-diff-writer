@@ -24,17 +24,25 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
 
         /// <summary>
         /// Initializes an instance of the <see cref="ConsoleDiffString"/> with 
-        /// a <see cref="ConsoleString"/> and a <see cref="System.Drawing.Point"/>
+        /// a <see cref="ConsoleString"/> and a <see cref="System.Drawing.Point"/>.
         /// </summary>
-        /// <param name="str">The <see cref="ConsoleString"/> to keep track of.</param>
         /// <param name="point">The point on the console to which to write the <see cref="ConsoleString"/> to.</param>
-        public ConsoleDiffString(ConsoleString str, Point point)
+        /// <param name="str">The <see cref="ConsoleString"/> to keep track of.</param>
+        public ConsoleDiffString(Point point, ConsoleString str) : this(point)
         {
-            WrittenString = new List<ConsoleDiffCharacter>(str.Length);
-            Point = point;
-
             for (int i = 0; i < str.Length; i++)
-                WrittenString.Add(new ConsoleDiffCharacter(str[i], new Point(point.X + i, point.Y)));
+                WrittenString.Add(new ConsoleDiffCharacter(new Point(point.X + i, point.Y), str[i]));
+        }
+
+        /// <summary>
+        /// Initializes an empty instance of the <see cref="ConsoleDiffString"/> with 
+        /// a <see cref="System.Drawing.Point"/> at which to track the diff.
+        /// </summary>
+        /// <param name="point">The point on the console to which to write the <see cref="ConsoleString"/> to.</param>
+        public ConsoleDiffString(Point point)
+        {
+            WrittenString = new List<ConsoleDiffCharacter>();
+            Point = point;
         }
 
         /// <summary>
@@ -56,7 +64,7 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
             // If the new string is longer than the one written, add space characters
             // to the end of the previously written string.
             for (int i = WrittenString.Count; i < str.Length; i++)
-                WrittenString.Add(new ConsoleDiffCharacter(new ConsoleCharacter(' '), new Point(Point.X + i, Point.Y)));
+                WrittenString.Add(new ConsoleDiffCharacter(new Point(Point.X + i, Point.Y), new ConsoleCharacter(' ')));
 
             // Write the diff between all the characters of the two strings.
             for (int i = 0; i < str.Length; i++)
@@ -69,6 +77,43 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
             {
                 new ConsoleCharacter(' ').WriteAtPoint(new Point(WrittenString[0].Point.X + i, WrittenString[0].Point.Y));
                 WrittenString.RemoveAt(str.Length); // Remove last element.
+            }
+        }
+
+        /// <summary>
+        /// Fills the line of the specified <paramref name="length"/> with the specified <paramref name="backColor"/>.
+        /// </summary>
+        /// <param name="length">The length of the area.</param>
+        /// <param name="backColor">The fill color.</param>
+        public void Fill(int length, ConsoleColor backColor)
+        {
+            // Save current cursor coordinates.
+            Point prevPoint = new Point(Console.CursorLeft, Console.CursorTop);
+
+            // Write at the given position.
+            Console.SetCursorPosition(Point.X, Point.Y);
+
+            // Save current console color.
+            ConsoleColor prevBgColor = Console.BackgroundColor;
+
+            // Change the writing colors only if they are given.
+            Console.BackgroundColor = backColor;
+
+            Console.Write(new string(' ', length));
+
+            // Restore the saved console color.
+            Console.BackgroundColor = prevBgColor;
+
+            // Restore saved cursor coordinates.
+            Console.SetCursorPosition(prevPoint.X, prevPoint.Y);
+
+            WrittenString = new List<ConsoleDiffCharacter>(length);
+
+            for (int i = 0; i < length; i++)
+            {
+                ConsoleDiffCharacter character = new ConsoleDiffCharacter(new Point(Point.X + i, Point.Y), new ConsoleCharacter(backColor));
+                WrittenString.Add(character);
+                character.AlreadyWritten = true;
             }
         }
 

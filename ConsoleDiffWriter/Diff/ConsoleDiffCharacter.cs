@@ -20,17 +20,28 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
         /// </summary>
         public ConsoleCharacter WrittenCharacter { get; private set; }
 
-        private bool AlreadyWritten { get; set; } = false;
+        internal bool AlreadyWritten { get; set; } = false;
 
         /// <summary>
         /// Initializes an instance of the <see cref="ConsoleDiffCharacter"/> with 
         /// a <see cref="ConsoleCharacter"/> and a <see cref="System.Drawing.Point"/>
         /// </summary>
-        /// <param name="character">The <see cref="ConsoleCharacter"/> to keep track of.</param>
         /// <param name="point">The point on the console to which to write the <see cref="ConsoleCharacter"/> to.</param>
-        public ConsoleDiffCharacter(ConsoleCharacter character, Point point)
+        /// <param name="character">The <see cref="ConsoleCharacter"/> to keep track of.</param>
+        public ConsoleDiffCharacter(Point point, ConsoleCharacter character)
         {
             WrittenCharacter = character;
+            Point = point;
+        }
+
+        /// <summary>
+        /// Initializes an empty instance of the <see cref="ConsoleDiffCharacter"/> with 
+        /// a <see cref="System.Drawing.Point"/> at which to track the diff.
+        /// </summary>
+        /// <param name="point">The point on the console to which to write the <see cref="ConsoleCharacter"/> to.</param>
+        public ConsoleDiffCharacter(Point point)
+        {
+            WrittenCharacter = new ConsoleCharacter();
             Point = point;
         }
 

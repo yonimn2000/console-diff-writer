@@ -21,15 +21,23 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
         /// Initializes an instance of the <see cref="ConsoleDiffLines"/> with 
         /// a <see cref="ConsoleLines"/> and a <see cref="System.Drawing.Point"/>
         /// </summary>
-        /// <param name="lines">The <see cref="ConsoleLines"/> to keep track of.</param>
         /// <param name="point">The point on the console to which to write the <see cref="ConsoleLines"/> to.</param>
-        public ConsoleDiffLines(ConsoleLines lines, Point point)
+        /// <param name="lines">The <see cref="ConsoleLines"/> to keep track of.</param>
+        public ConsoleDiffLines(Point point, ConsoleLines lines) : this(point)
         {
-            WrittenLines = new List<ConsoleDiffString>(lines.Count);
-            Point = point;
-
             for (int i = 0; i < lines.Count; i++)
-                WrittenLines.Add(new ConsoleDiffString(lines[i], new Point(point.X, point.Y + i)));
+                WrittenLines.Add(new ConsoleDiffString(new Point(point.X, point.Y + i), lines[i]));
+        }
+
+        /// <summary>
+        /// Initializes an empty instance of the <see cref="ConsoleDiffLines"/>
+        /// a <see cref="System.Drawing.Point"/> at which to track the diff.
+        /// </summary>
+        /// <param name="point">The point on the console to which to write the <see cref="ConsoleLines"/> to.</param>
+        public ConsoleDiffLines(Point point)
+        {
+            WrittenLines = new List<ConsoleDiffString>();
+            Point = point;
         }
 
         /// <summary>
@@ -50,7 +58,7 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
         {
             // If the new area has more lines than the one written, add blank lines to the end of the previously written area.
             for (int i = WrittenLines.Count; i < lines.Count; i++)
-                WrittenLines.Add(new ConsoleDiffString(new ConsoleString(), new Point(Point.X, Point.Y + i)));
+                WrittenLines.Add(new ConsoleDiffString(new Point(Point.X, Point.Y + i), new ConsoleString()));
 
             // Write the diff between all the lines of the two areas.
             for (int i = 0; i < lines.Count; i++)
@@ -62,6 +70,23 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
                 new ConsoleString(new string(' ', WrittenLines[i].Length)).WriteAtPoint(new Point(Point.X, Point.Y + i));
             for (int i = lines.Count; i < WrittenLines.Count; i++)
                 WrittenLines.RemoveAt(lines.Count); // Remove last element.
+        }
+
+        /// <summary>
+        /// Fills an area of the specified <paramref name="size"/> with the specified <paramref name="backColor"/>.
+        /// </summary>
+        /// <param name="size">The size of the area.</param>
+        /// <param name="backColor">The fill color.</param>
+        public void FillArea(Size size, ConsoleColor backColor)
+        {
+            WrittenLines = new List<ConsoleDiffString>(size.Height);
+
+            for (int i = 0; i < size.Height; i++)
+            {
+                ConsoleDiffString line = new ConsoleDiffString(new Point(Point.X, Point.Y + i));
+                line.Fill(size.Width, backColor);
+                WrittenLines.Add(line);
+            }
         }
 
         /// <summary>
