@@ -66,9 +66,9 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
         /// </summary>
         /// <param name="character">The <see cref="ConsoleString"/> to add.</param>
         /// <returns>The updated self.</returns>
-        public ConsoleLines AppendLastLine(ConsoleCharacter character)
+        public ConsoleLines AddToEndOfLastLine(ConsoleCharacter character)
         {
-            GetLastLine().Append(character);
+            GetLastLine().AddToEnd(character);
             return this;
         }
 
@@ -78,9 +78,9 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
         /// </summary>
         /// <param name="str">The <see cref="ConsoleString"/> to add.</param>
         /// <returns>The updated self.</returns>
-        public ConsoleLines AppendLastLine(ConsoleString str)
+        public ConsoleLines AddToEndOfLastLine(ConsoleString str)
         {
-            GetLastLine().Append(str);
+            GetLastLine().AddToEnd(str);
             return this;
         }
 

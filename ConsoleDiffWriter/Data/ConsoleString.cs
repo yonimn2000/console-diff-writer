@@ -61,7 +61,7 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
         /// </summary>
         /// <param name="character">The <see cref="ConsoleCharacter"/> to add.</param>
         /// <returns>The updated self.</returns>
-        public ConsoleString Append(ConsoleCharacter character)
+        public ConsoleString AddToEnd(ConsoleCharacter character)
         {
             Characters.Add(character);
             return this;
@@ -72,7 +72,7 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
         /// </summary>
         /// <param name="str">The <see cref="ConsoleString"/> to add.</param>
         /// <returns>The updated self.</returns>
-        public ConsoleString Append(ConsoleString str)
+        public ConsoleString AddToEnd(ConsoleString str)
         {
             foreach (ConsoleCharacter character in str)
                 Characters.Add(character);
@@ -125,7 +125,7 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
         /// </returns>
         public static ConsoleString operator +(ConsoleString left, ConsoleString right)
         {
-            return new ConsoleString(left.Characters).Append(right);
+            return new ConsoleString(left.Characters).AddToEnd(right);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
         /// </returns>
         public static ConsoleString operator +(ConsoleString str, ConsoleCharacter character)
         {
-            return new ConsoleString(str.Characters).Append(character);
+            return new ConsoleString(str.Characters).AddToEnd(character);
         }
 
         /// <inheritdoc/>
