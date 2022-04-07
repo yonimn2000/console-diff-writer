@@ -97,7 +97,7 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
         {
             return other != null &&
                    Character == other.Character &&
-                   TextColor == other.TextColor &&
+                   (TextColor == other.TextColor || Character == ' ') &&
                    BackColor == other.BackColor;
         }
 
