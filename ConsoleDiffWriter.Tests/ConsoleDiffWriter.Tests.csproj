@@ -15,4 +15,10 @@
     <ProjectReference Include="..\ConsoleDiffWriter\ConsoleDiffWriter.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="YonatanMankovich.SimpleColorConsole">
+      <HintPath>..\..\SimpleColorConsole\SimpleColorConsole\bin\Debug\net6.0\YonatanMankovich.SimpleColorConsole.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

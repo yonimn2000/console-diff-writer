@@ -1,29 +1,29 @@
 ﻿using System.Collections;
 using System.Drawing;
-using YonatanMankovich.ConsoleDiffWriter.Data;
+using YonatanMankovich.SimpleColorConsole;
 
-namespace YonatanMankovich.ConsoleDiffWriter.Diff
+namespace YonatanMankovich.ConsoleDiffWriter
 {
     /// <summary>
     /// Represents a structure that keeps track of a <see cref="ConsoleDiffLines"/> 
     /// written to the console at a specific point and can write just the difference
-    /// between it and a new <see cref="ConsoleLines"/>.
+    /// between it and a new <see cref="ColorLines"/>.
     /// </summary>
     public class ConsoleDiffLines : IEnumerable<ConsoleDiffString>
     {
         /// <summary>
-        /// The point on the console to which to write the <see cref="ConsoleLines"/> to.
+        /// The point on the console to which to write the <see cref="ColorLines"/> to.
         /// </summary>
         public Point Point { get; }
         private IList<ConsoleDiffString> WrittenLines { get; set; }
 
         /// <summary>
         /// Initializes an instance of the <see cref="ConsoleDiffLines"/> with 
-        /// a <see cref="ConsoleLines"/> and a <see cref="System.Drawing.Point"/>
+        /// a <see cref="ColorLines"/> and a <see cref="System.Drawing.Point"/>
         /// </summary>
-        /// <param name="point">The point on the console to which to write the <see cref="ConsoleLines"/> to.</param>
-        /// <param name="lines">The <see cref="ConsoleLines"/> to keep track of.</param>
-        public ConsoleDiffLines(Point point, ConsoleLines lines) : this(point)
+        /// <param name="point">The point on the console to which to write the <see cref="ColorLines"/> to.</param>
+        /// <param name="lines">The <see cref="ColorLines"/> to keep track of.</param>
+        public ConsoleDiffLines(Point point, ColorLines lines) : this(point)
         {
             for (int i = 0; i < lines.Count; i++)
                 WrittenLines.Add(new ConsoleDiffString(new Point(point.X, point.Y + i), lines[i]));
@@ -39,7 +39,7 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
         /// Initializes an empty instance of the <see cref="ConsoleDiffLines"/> with
         /// a <see cref="System.Drawing.Point"/> at which to track the diff.
         /// </summary>
-        /// <param name="point">The point on the console to which to write the <see cref="ConsoleLines"/> to.</param>
+        /// <param name="point">The point on the console to which to write the <see cref="ColorLines"/> to.</param>
         public ConsoleDiffLines(Point point)
         {
             WrittenLines = new List<ConsoleDiffString>();
@@ -47,15 +47,15 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
         }
 
         /// <summary>
-        /// Writes only the difference between the written <see cref="ConsoleLines"/>
-        /// and the given <see cref="ConsoleLines"/> to the console.
+        /// Writes only the difference between the written <see cref="ColorLines"/>
+        /// and the given <see cref="ColorLines"/> to the console.
         /// </summary>
-        /// <param name="lines">The new <see cref="ConsoleLines"/> to overwrite the written <see cref="ConsoleLines"/> with.</param>
-        public void WriteDiff(ConsoleLines lines)
+        /// <param name="lines">The new <see cref="ColorLines"/> to overwrite the written <see cref="ColorLines"/> with.</param>
+        public void WriteDiff(ColorLines lines)
         {
             // If the new area has more lines than the one written, add blank lines to the end of the previously written area.
             for (int i = WrittenLines.Count; i < lines.Count; i++)
-                WrittenLines.Add(new ConsoleDiffString(new Point(Point.X, Point.Y + i), new ConsoleString()));
+                WrittenLines.Add(new ConsoleDiffString(new Point(Point.X, Point.Y + i), new ColorString()));
 
             // Write the diff between all the lines of the two areas.
             for (int i = 0; i < lines.Count; i++)
@@ -64,7 +64,7 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
             // If the new area has less lines than the written one,
             // overwrite the old extra lines with spaces and remove them from the list of written lines.
             for (int i = lines.Count; i < WrittenLines.Count; i++)
-                new ConsoleString(new string(' ', WrittenLines[i].Length)).WriteAtPoint(new Point(Point.X, Point.Y + i));
+                new ColorString(new string(' ', WrittenLines[i].Length)).WriteAtPoint(new Point(Point.X, Point.Y + i));
             for (int i = lines.Count; i < WrittenLines.Count; i++)
                 WrittenLines.RemoveAt(lines.Count); // Remove last element.
 
@@ -76,16 +76,16 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
         /// </summary>
         public void Clear()
         {
-            WriteDiff(new ConsoleLines());
+            WriteDiff(new ColorLines());
         }
 
         /// <summary>
-        /// Gets the written <see cref="ConsoleLines"/>.
+        /// Gets the written <see cref="ColorLines"/>.
         /// </summary>
-        /// <returns>The written <see cref="ConsoleLines"/>.</returns>
-        public ConsoleLines GetWrittenLines()
+        /// <returns>The written <see cref="ColorLines"/>.</returns>
+        public ColorLines GetWrittenLines()
         {
-            return new ConsoleLines(WrittenLines.Select(c => c.GetWrittenString()));
+            return new ColorLines(WrittenLines.Select(c => c.GetWrittenString()));
         }
 
         /// <summary>

@@ -12,4 +12,10 @@
     <Authors>Yonatan Mankovich</Authors>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="YonatanMankovich.SimpleColorConsole">
+      <HintPath>..\..\SimpleColorConsole\SimpleColorConsole\bin\Debug\net6.0\YonatanMankovich.SimpleColorConsole.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
