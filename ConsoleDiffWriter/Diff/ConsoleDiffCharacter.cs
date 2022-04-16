@@ -20,7 +20,7 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
         /// </summary>
         public ConsoleCharacter WrittenCharacter { get; private set; }
 
-        internal bool AlreadyWritten { get; set; } = false;
+        private bool AlreadyWritten { get; set; } = false;
 
         /// <summary>
         /// Initializes an instance of the <see cref="ConsoleDiffCharacter"/> with 
@@ -33,6 +33,12 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
             WrittenCharacter = character;
             Point = point;
         }
+
+        /// <summary>
+        /// Initializes an empty instance of the <see cref="ConsoleDiffCharacter"/>
+        /// at the current <see cref="Console"/> cursor position.
+        /// </summary>
+        public ConsoleDiffCharacter() : this(new Point(Console.CursorLeft, Console.CursorTop)) { }
 
         /// <summary>
         /// Initializes an empty instance of the <see cref="ConsoleDiffCharacter"/> with 
@@ -49,16 +55,25 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
         /// Writes only the difference between the <see cref="WrittenCharacter"/>
         /// and the given <see cref="ConsoleCharacter"/> to the console.
         /// </summary>
-        /// <param name="character">The new <see cref="ConsoleCharacter"/> to overwrite the <see cref="WrittenCharacter"/> with.</param>
-        public void WriteDiff(ConsoleCharacter character)
+        /// <param name="newChar">The new <see cref="ConsoleCharacter"/> to overwrite the <see cref="WrittenCharacter"/> with.</param>
+        public void WriteDiff(ConsoleCharacter newChar)
         {
             // Write only if the character changed.
-            if (IsDifferentFromCharacter(character))
+            if (IsCharDifferentFromWrittenChar(newChar))
             {
-                character.WriteAtPoint(Point);
-                WrittenCharacter = character;
-                AlreadyWritten = true;
+                newChar.WriteAtPoint(Point);
+                UpdateWrittenCharacter(newChar);
             }
+        }
+
+        /// <summary>
+        /// Updates the <see cref="WrittenCharacter"/> with the given <see cref="ConsoleCharacter"/>.
+        /// </summary>
+        /// <param name="newChar">The <see cref="ConsoleCharacter"/>.</param>
+        internal void UpdateWrittenCharacter(ConsoleCharacter newChar)
+        {
+            WrittenCharacter = newChar;
+            AlreadyWritten = true;
         }
 
         /// <summary>
@@ -74,7 +89,7 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
         /// </summary>
         /// <param name="character">The new character to compare the <see cref="WrittenCharacter"/> with.</param>
         /// <returns><see langword="true"/> if they are different; otherwise, <see langword="false"/>.</returns>
-        public bool IsDifferentFromCharacter(ConsoleCharacter character)
+        public bool IsCharDifferentFromWrittenChar(ConsoleCharacter character)
         {
             return !AlreadyWritten || !character.Equals(WrittenCharacter);
         }

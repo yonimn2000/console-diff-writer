@@ -19,7 +19,9 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
             set
             {
                 if (InvalidCharacters.Contains(value))
-                    throw new ArgumentException("Invalid character given.", nameof(value));
+                    throw new ArgumentException("Invalid character given. " +
+                        "Character cannot be a new line, carriage return, or tab character.", nameof(value));
+
                 character = value;
             }
         }

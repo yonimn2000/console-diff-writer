@@ -35,6 +35,12 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
         }
 
         /// <summary>
+        /// Initializes an empty instance of the <see cref="ConsoleDiffString"/>
+        /// at the current <see cref="Console"/> cursor position.
+        /// </summary>
+        public ConsoleDiffString() : this(new Point(Console.CursorLeft, Console.CursorTop)) { }
+
+        /// <summary>
         /// Initializes an empty instance of the <see cref="ConsoleDiffString"/> with 
         /// a <see cref="System.Drawing.Point"/> at which to track the diff.
         /// </summary>
@@ -52,56 +58,27 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
         /// <param name="str">The new <see cref="ConsoleString"/> to overwrite the written <see cref="ConsoleString"/> with.</param>
         public void WriteDiff(ConsoleString str)
         {
-            // If the new string is longer than the one written, add space characters
-            // to the end of the previously written string.
-            for (int i = WrittenString.Count; i < str.Length; i++)
-                WrittenString.Add(new ConsoleDiffCharacter(new Point(Point.X + i, Point.Y), new ConsoleCharacter(' ')));
+            using (DiffWriter diffWriter = new DiffWriter())
+            {
+                // If the new string is longer than the one written, add space characters
+                // to the end of the previously written string.
+                for (int i = WrittenString.Count; i < str.Length; i++)
+                    WrittenString.Add(new ConsoleDiffCharacter(new Point(Point.X + i, Point.Y), new ConsoleCharacter(' ')));
 
-            // Write the diff between all the characters of the two strings.
-            for (int i = 0; i < str.Length; i++)
-                WrittenString[i].WriteDiff(str[i]);
+                // Write the diff between all the characters of the two strings.
+                for (int i = 0; i < str.Length; i++)
+                    diffWriter.WriteDiff(WrittenString[i], str[i]);
+            }
 
             // If the new string is shorter, overwrite the old extra characters with spaces
             // and remove them from the list of written characters.
-            new ConsoleString(new string(' ', WrittenString.Count - str.Length)).WriteAtPoint(new Point(WrittenString[0].Point.X + str.Length, WrittenString[0].Point.Y));
-            for (int i = str.Length; i < WrittenString.Count; i++)
-                WrittenString.RemoveAt(str.Length); // Remove last element.
-        }
-
-        /// <summary>
-        /// Fills the line of the specified <paramref name="length"/> with the specified <paramref name="backColor"/>.
-        /// </summary>
-        /// <param name="length">The length of the area.</param>
-        /// <param name="backColor">The fill color.</param>
-        public void Fill(int length, ConsoleColor backColor)
-        {
-            // Save current cursor coordinates.
-            Point prevPoint = new Point(Console.CursorLeft, Console.CursorTop);
-
-            // Write at the given position.
-            Console.SetCursorPosition(Point.X, Point.Y);
-
-            // Save current console color.
-            ConsoleColor prevBgColor = Console.BackgroundColor;
-
-            // Change the writing colors only if they are given.
-            Console.BackgroundColor = backColor;
-
-            Console.Write(new string(' ', length));
-
-            // Restore the saved console color.
-            Console.BackgroundColor = prevBgColor;
-
-            // Restore saved cursor coordinates.
-            Console.SetCursorPosition(prevPoint.X, prevPoint.Y);
-
-            WrittenString = new List<ConsoleDiffCharacter>(length);
-
-            for (int i = 0; i < length; i++)
+            if (WrittenString.Count > str.Length)
             {
-                ConsoleDiffCharacter character = new ConsoleDiffCharacter(new Point(Point.X + i, Point.Y), new ConsoleCharacter(backColor));
-                WrittenString.Add(character);
-                character.AlreadyWritten = true;
+                new ConsoleString(new string(' ', WrittenString.Count - str.Length))
+                    .WriteAtPoint(new Point(WrittenString[0].Point.X + str.Length, WrittenString[0].Point.Y));
+
+                for (int i = WrittenString.Count - 1; i >= str.Length; i--)
+                    WrittenString.RemoveAt(str.Length);
             }
         }
 

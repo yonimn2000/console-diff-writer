@@ -68,6 +68,16 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
         }
 
         /// <summary>
+        /// Adds a <see cref="char"/> to the end of the current <see cref="ConsoleString"/>.
+        /// </summary>
+        /// <param name="character">The <see cref="char"/> to add.</param>
+        /// <returns>The updated self.</returns>
+        public ConsoleString AddToEnd(char character)
+        {
+            return AddToEnd(new ConsoleCharacter(character));
+        }
+
+        /// <summary>
         /// Adds a <see cref="ConsoleString"/> to the end of the current <see cref="ConsoleString"/>.
         /// </summary>
         /// <param name="str">The <see cref="ConsoleString"/> to add.</param>
@@ -80,12 +90,23 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
         }
 
         /// <summary>
+        /// Adds a <see cref="string"/> to the end of the current <see cref="ConsoleString"/>.
+        /// </summary>
+        /// <param name="str">The <see cref="string"/> to add.</param>
+        /// <returns>The updated self.</returns>
+        public ConsoleString AddToEnd(string str)
+        {
+            return AddToEnd(new ConsoleString(str));
+        }
+
+        /// <summary>
         /// Writes the current <see cref="ConsoleString"/> to the console.
         /// </summary>
         public void Write()
         {
-            foreach (ConsoleCharacter character in Characters)
-                character.Write();
+            using (Writer writer = new Writer())
+                foreach (ConsoleCharacter character in Characters)
+                    writer.Write(character);
         }
 
         /// <summary>
@@ -129,6 +150,20 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
         }
 
         /// <summary>
+        /// Concatenates a <see cref="string"/> to a <see cref="ConsoleString"/>.
+        /// </summary>
+        /// <param name="left">The left <see cref="ConsoleString"/>.</param>
+        /// <param name="right">The right <see cref="string"/>.</param>
+        /// <returns>
+        /// A new <see cref="ConsoleString"/> that is a combination of 
+        /// the left <see cref="ConsoleString"/> and right <see cref="string"/>.
+        /// </returns>
+        public static ConsoleString operator +(ConsoleString left, string right)
+        {
+            return new ConsoleString(left.Characters).AddToEnd(right);
+        }
+
+        /// <summary>
         /// Concatenates a <see cref="ConsoleCharacter"/> to a <see cref="ConsoleString"/>.
         /// </summary>
         /// <param name="str">The <see cref="ConsoleString"/>.</param>
@@ -138,6 +173,20 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
         /// the left <see cref="ConsoleString"/> and the right <see cref="ConsoleCharacter"/>s.
         /// </returns>
         public static ConsoleString operator +(ConsoleString str, ConsoleCharacter character)
+        {
+            return new ConsoleString(str.Characters).AddToEnd(character);
+        }
+
+        /// <summary>
+        /// Concatenates a <see cref="char"/> to a <see cref="ConsoleString"/>.
+        /// </summary>
+        /// <param name="str">The <see cref="ConsoleString"/>.</param>
+        /// <param name="character">The <see cref="char"/>.</param>
+        /// <returns>
+        /// A new <see cref="ConsoleString"/> that is a combination of 
+        /// the left <see cref="ConsoleString"/> and the right <see cref="char"/>s.
+        /// </returns>
+        public static ConsoleString operator +(ConsoleString str, char character)
         {
             return new ConsoleString(str.Characters).AddToEnd(character);
         }

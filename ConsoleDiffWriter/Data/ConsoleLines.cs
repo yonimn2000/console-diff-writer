@@ -122,16 +122,13 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
         /// <param name="point">The position in the console to write the current <see cref="ConsoleLines"/> to.</param>
         public void WriteAtPoint(Point point)
         {
-            // Save previous cursor coordinates.
-            int prevCursorTop = Console.CursorTop;
-            int prevCursorLeft = Console.CursorLeft;
-
-            // Write.
             Console.SetCursorPosition(point.X, point.Y);
-            Write();
-
-            // Restore previous cursor coordinates.
-            Console.SetCursorPosition(prevCursorLeft, prevCursorTop);
+            for (int y = 0; y < Lines.Count; y++)
+            {
+                Console.CursorLeft = point.X;
+                ConsoleString str = Lines[y];
+                str.WriteLine();
+            }
         }
 
         /// <inheritdoc/>
@@ -153,6 +150,20 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
         IEnumerator IEnumerable.GetEnumerator()
         {
             return ((IEnumerable)Lines).GetEnumerator();
+        }
+
+        /// <summary>
+        /// Concatenates one <see cref="ConsoleLines"/> to another.
+        /// </summary>
+        /// <param name="lines1">The top <see cref="ConsoleLines"/>.</param>
+        /// <param name="lines2">The bottom <see cref="ConsoleLines"/>.</param>
+        /// <returns>
+        /// A new <see cref="ConsoleLines"/> that is a combination of 
+        /// the top and bottom <see cref="ConsoleLines"/>s.
+        /// </returns>
+        public static ConsoleLines operator +(ConsoleLines lines1, ConsoleLines lines2)
+        {
+            return new ConsoleLines(lines1).AddLines(lines2);
         }
     }
 }

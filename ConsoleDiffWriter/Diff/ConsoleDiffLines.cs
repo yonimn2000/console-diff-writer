@@ -31,6 +31,12 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
 
         /// <summary>
         /// Initializes an empty instance of the <see cref="ConsoleDiffLines"/>
+        /// at the current <see cref="Console"/> cursor position.
+        /// </summary>
+        public ConsoleDiffLines() : this(new Point(Console.CursorLeft, Console.CursorTop)) { }
+
+        /// <summary>
+        /// Initializes an empty instance of the <see cref="ConsoleDiffLines"/> with
         /// a <see cref="System.Drawing.Point"/> at which to track the diff.
         /// </summary>
         /// <param name="point">The point on the console to which to write the <see cref="ConsoleLines"/> to.</param>
@@ -61,23 +67,8 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
                 new ConsoleString(new string(' ', WrittenLines[i].Length)).WriteAtPoint(new Point(Point.X, Point.Y + i));
             for (int i = lines.Count; i < WrittenLines.Count; i++)
                 WrittenLines.RemoveAt(lines.Count); // Remove last element.
-        }
 
-        /// <summary>
-        /// Fills an area of the specified <paramref name="size"/> with the specified <paramref name="backColor"/>.
-        /// </summary>
-        /// <param name="size">The size of the area.</param>
-        /// <param name="backColor">The fill color.</param>
-        public void FillArea(Size size, ConsoleColor backColor)
-        {
-            WrittenLines = new List<ConsoleDiffString>(size.Height);
-
-            for (int i = 0; i < size.Height; i++)
-            {
-                ConsoleDiffString line = new ConsoleDiffString(new Point(Point.X, Point.Y + i));
-                line.Fill(size.Width, backColor);
-                WrittenLines.Add(line);
-            }
+            BringCursorToEnd();
         }
 
         /// <summary>
@@ -102,7 +93,11 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
         /// </summary>
         public void BringCursorToEnd()
         {
-            Console.SetCursorPosition(0, Point.Y + WrittenLines.Count);
+            int newTop = Point.Y + WrittenLines.Count;
+            if (OperatingSystem.IsWindows() && newTop >= Console.BufferHeight)
+                Console.BufferHeight = newTop + 1;
+
+            Console.SetCursorPosition(0, newTop);
         }
 
         /// <summary>
