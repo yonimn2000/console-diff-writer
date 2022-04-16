@@ -46,14 +46,6 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
         }
 
         /// <summary>
-        /// Writes the <see cref="ConsoleCharacter"/> to the console.
-        /// </summary>
-        public void Write()
-        {
-            WriteDiff(WrittenCharacter);
-        }
-
-        /// <summary>
         /// Writes only the difference between the <see cref="WrittenCharacter"/>
         /// and the given <see cref="ConsoleCharacter"/> to the console.
         /// </summary>

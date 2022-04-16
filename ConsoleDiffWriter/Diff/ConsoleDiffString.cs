@@ -46,15 +46,6 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
         }
 
         /// <summary>
-        /// Writes the <see cref="ConsoleString"/> to the console.
-        /// </summary>
-        public void Write()
-        {
-            foreach (ConsoleDiffCharacter character in WrittenString)
-                character.Write();
-        }
-
-        /// <summary>
         /// Writes only the difference between the written <see cref="ConsoleString"/>
         /// and the given <see cref="ConsoleString"/> to the console.
         /// </summary>
@@ -72,12 +63,9 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
 
             // If the new string is shorter, overwrite the old extra characters with spaces
             // and remove them from the list of written characters.
-            int originalDrawnStringLength = WrittenString.Count;
-            for (int i = str.Length; i < originalDrawnStringLength; i++)
-            {
-                new ConsoleCharacter(' ').WriteAtPoint(new Point(WrittenString[0].Point.X + i, WrittenString[0].Point.Y));
+            new ConsoleString(new string(' ', WrittenString.Count - str.Length)).WriteAtPoint(new Point(WrittenString[0].Point.X + str.Length, WrittenString[0].Point.Y));
+            for (int i = str.Length; i < WrittenString.Count; i++)
                 WrittenString.RemoveAt(str.Length); // Remove last element.
-            }
         }
 
         /// <summary>

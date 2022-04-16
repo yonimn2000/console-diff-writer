@@ -61,6 +61,18 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
         }
 
         /// <summary>
+        /// Adds a the given <see cref="ConsoleLines"/> to the end of the current <see cref="ConsoleLines"/> structure.
+        /// </summary>
+        /// <param name="lines">The <see cref="ConsoleLines"/> to add.</param>
+        /// <returns>The updated self.</returns>
+        public ConsoleLines AddLines(ConsoleLines lines)
+        {
+            foreach (ConsoleString line in lines)
+                AddLine(line);
+            return this;
+        }
+
+        /// <summary>
         /// Adds a <see cref="ConsoleCharacter"/> to the end of the last line
         /// of the current <see cref="ConsoleLines"/> structure.
         /// </summary>

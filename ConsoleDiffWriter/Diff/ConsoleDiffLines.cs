@@ -41,15 +41,6 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
         }
 
         /// <summary>
-        /// Writes the <see cref="ConsoleLines"/> to the console.
-        /// </summary>
-        public void Write()
-        {
-            foreach (ConsoleDiffString line in WrittenLines)
-                line.Write();
-        }
-
-        /// <summary>
         /// Writes only the difference between the written <see cref="ConsoleLines"/>
         /// and the given <see cref="ConsoleLines"/> to the console.
         /// </summary>
@@ -104,6 +95,14 @@ namespace YonatanMankovich.ConsoleDiffWriter.Diff
         public ConsoleLines GetWrittenLines()
         {
             return new ConsoleLines(WrittenLines.Select(c => c.GetWrittenString()));
+        }
+
+        /// <summary>
+        /// Brings the cursor to the beginning of the line after the drawn lines.
+        /// </summary>
+        public void BringCursorToEnd()
+        {
+            Console.SetCursorPosition(0, Point.Y + WrittenLines.Count);
         }
 
         /// <summary>

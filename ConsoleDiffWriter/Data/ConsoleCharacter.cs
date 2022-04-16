@@ -7,10 +7,22 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
     /// </summary>
     public class ConsoleCharacter : IEquatable<ConsoleCharacter?>
     {
+        private char character;
+        private static HashSet<char> InvalidCharacters { get; } = new HashSet<char> { '\n', '\r', '\t' };
+
         /// <summary>
         /// The character.
         /// </summary>
-        public char Character { get; set; }
+        public char Character
+        {
+            get => character;
+            set
+            {
+                if (InvalidCharacters.Contains(value))
+                    throw new ArgumentException("Invalid character given.", nameof(value));
+                character = value;
+            }
+        }
 
         /// <summary>
         /// The text color of the character as displayed in the console.
@@ -56,11 +68,11 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
             ConsoleColor prevFgColor = Console.ForegroundColor;
 
             // Change the writing colors only if they are given.
-            if (BackColor != null)
-                Console.BackgroundColor = (ConsoleColor)BackColor;
+            if (BackColor.HasValue)
+                Console.BackgroundColor = BackColor.Value;
 
-            if (TextColor != null)
-                Console.ForegroundColor = (ConsoleColor)TextColor;
+            if (TextColor.HasValue)
+                Console.ForegroundColor = TextColor.Value;
 
             Console.Write(Character);
 
@@ -87,10 +99,7 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
         }
 
         /// <inheritdoc/>
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as ConsoleCharacter);
-        }
+        public override bool Equals(object? obj) => Equals(obj as ConsoleCharacter);
 
         /// <inheritdoc/>
         public bool Equals(ConsoleCharacter? other)
@@ -102,15 +111,10 @@ namespace YonatanMankovich.ConsoleDiffWriter.Data
         }
 
         /// <inheritdoc/>
-        public override string? ToString()
-        {
-            return Character.ToString();
-        }
+        public override string? ToString() => Character.ToString();
 
         /// <inheritdoc/>
         public override int GetHashCode()
-        {
-            return Character.GetHashCode();
-        }
+            => (Character.ToString() + TextColor.ToString() + BackColor.ToString()).GetHashCode();
     }
 }
