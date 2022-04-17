@@ -63,7 +63,7 @@ namespace YonatanMankovich.ConsoleDiffWriter
                 // If the new string is longer than the one written, add space characters
                 // to the end of the previously written string.
                 for (int i = WrittenString.Count; i < str.Length; i++)
-                    WrittenString.Add(new ConsoleDiffCharacter(new Point(Point.X + i, Point.Y), new ColorCharacter(' ')));
+                    WrittenString.Add(new ConsoleDiffCharacter(new Point(Point.X + i, Point.Y), new ColorChar(' ')));
 
                 // Write the diff between all the characters of the two strings.
                 for (int i = 0; i < str.Length; i++)

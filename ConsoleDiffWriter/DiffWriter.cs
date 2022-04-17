@@ -18,12 +18,12 @@ namespace YonatanMankovich.ConsoleDiffWriter
 
         /// <summary>
         /// Writes the difference between the given <see cref="ConsoleDiffCharacter"/> and the 
-        /// <see cref="ColorCharacter"/> without moving the cursor position or changing the console 
-        /// colors unless needed based on the previously written <see cref="ColorCharacter"/>.
+        /// <see cref="ColorChar"/> without moving the cursor position or changing the console 
+        /// colors unless needed based on the previously written <see cref="ColorChar"/>.
         /// </summary>
         /// <param name="diffChar">The <see cref="ConsoleDiffCharacter"/>.</param>
-        /// <param name="newChar">The new <see cref="ColorCharacter"/>.</param>
-        public void WriteDiff(ConsoleDiffCharacter diffChar, ColorCharacter newChar)
+        /// <param name="newChar">The new <see cref="ColorChar"/>.</param>
+        public void WriteDiff(ConsoleDiffCharacter diffChar, ColorChar newChar)
         {
             if (diffChar.IsCharDifferentFromWrittenChar(newChar))
             {

@@ -12,13 +12,13 @@ void RunDiffCharTests()
     Console.WriteLine(new string('-', 35));
 
     ConsoleDiffCharacter diff = new ConsoleDiffCharacter();
-    ColorCharacter character = new ColorCharacter('#', textColor: ConsoleColor.Magenta, backColor: ConsoleColor.Cyan);
+    ColorChar character = new ColorChar('#', textColor: ConsoleColor.Magenta, backColor: ConsoleColor.Cyan);
 
     diff.WriteDiff(character);
 
     Thread.Sleep(1000); // Sleep to show change.
 
-    ColorCharacter newCharacter = new ColorCharacter('C', textColor: ConsoleColor.Yellow, backColor: ConsoleColor.Blue);
+    ColorChar newCharacter = new ColorChar('C', textColor: ConsoleColor.Yellow, backColor: ConsoleColor.Blue);
 
     diff.WriteDiff(newCharacter);
 

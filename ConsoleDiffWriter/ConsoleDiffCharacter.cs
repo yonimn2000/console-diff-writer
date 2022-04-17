@@ -4,31 +4,31 @@ using YonatanMankovich.SimpleColorConsole;
 namespace YonatanMankovich.ConsoleDiffWriter
 {
     /// <summary>
-    /// Represents a structure that keeps track of a <see cref="ColorCharacter"/> 
+    /// Represents a structure that keeps track of a <see cref="ColorChar"/> 
     /// written to the console at a specific point and can write just the difference
-    /// between it and a new <see cref="ColorCharacter"/>.
+    /// between it and a new <see cref="ColorChar"/>.
     /// </summary>
     public class ConsoleDiffCharacter
     {
         /// <summary>
-        /// The point on the console to which to write the <see cref="ColorCharacter"/> to.
+        /// The point on the console to which to write the <see cref="ColorChar"/> to.
         /// </summary>
         public Point Point { get; }
 
         /// <summary>
-        /// Gets the written <see cref="ColorCharacter"/>.
+        /// Gets the written <see cref="ColorChar"/>.
         /// </summary>
-        public ColorCharacter WrittenCharacter { get; private set; }
+        public ColorChar WrittenCharacter { get; private set; }
 
         private bool AlreadyWritten { get; set; } = false;
 
         /// <summary>
         /// Initializes an instance of the <see cref="ConsoleDiffCharacter"/> with 
-        /// a <see cref="ColorCharacter"/> and a <see cref="System.Drawing.Point"/>
+        /// a <see cref="ColorChar"/> and a <see cref="System.Drawing.Point"/>
         /// </summary>
-        /// <param name="point">The point on the console to which to write the <see cref="ColorCharacter"/> to.</param>
-        /// <param name="character">The <see cref="ColorCharacter"/> to keep track of.</param>
-        public ConsoleDiffCharacter(Point point, ColorCharacter character)
+        /// <param name="point">The point on the console to which to write the <see cref="ColorChar"/> to.</param>
+        /// <param name="character">The <see cref="ColorChar"/> to keep track of.</param>
+        public ConsoleDiffCharacter(Point point, ColorChar character)
         {
             WrittenCharacter = character;
             Point = point;
@@ -44,19 +44,19 @@ namespace YonatanMankovich.ConsoleDiffWriter
         /// Initializes an empty instance of the <see cref="ConsoleDiffCharacter"/> with 
         /// a <see cref="System.Drawing.Point"/> at which to track the diff.
         /// </summary>
-        /// <param name="point">The point on the console to which to write the <see cref="ColorCharacter"/> to.</param>
+        /// <param name="point">The point on the console to which to write the <see cref="ColorChar"/> to.</param>
         public ConsoleDiffCharacter(Point point)
         {
-            WrittenCharacter = new ColorCharacter();
+            WrittenCharacter = new ColorChar();
             Point = point;
         }
 
         /// <summary>
         /// Writes only the difference between the <see cref="WrittenCharacter"/>
-        /// and the given <see cref="ColorCharacter"/> to the console.
+        /// and the given <see cref="ColorChar"/> to the console.
         /// </summary>
-        /// <param name="newChar">The new <see cref="ColorCharacter"/> to overwrite the <see cref="WrittenCharacter"/> with.</param>
-        public void WriteDiff(ColorCharacter newChar)
+        /// <param name="newChar">The new <see cref="ColorChar"/> to overwrite the <see cref="WrittenCharacter"/> with.</param>
+        public void WriteDiff(ColorChar newChar)
         {
             // Write only if the character changed.
             if (IsCharDifferentFromWrittenChar(newChar))
@@ -67,10 +67,10 @@ namespace YonatanMankovich.ConsoleDiffWriter
         }
 
         /// <summary>
-        /// Updates the <see cref="WrittenCharacter"/> with the given <see cref="ColorCharacter"/>.
+        /// Updates the <see cref="WrittenCharacter"/> with the given <see cref="ColorChar"/>.
         /// </summary>
-        /// <param name="newChar">The <see cref="ColorCharacter"/>.</param>
-        internal void UpdateWrittenCharacter(ColorCharacter newChar)
+        /// <param name="newChar">The <see cref="ColorChar"/>.</param>
+        internal void UpdateWrittenCharacter(ColorChar newChar)
         {
             WrittenCharacter = newChar;
             AlreadyWritten = true;
@@ -81,7 +81,7 @@ namespace YonatanMankovich.ConsoleDiffWriter
         /// </summary>
         public void Clear()
         {
-            WriteDiff(new ColorCharacter());
+            WriteDiff(new ColorChar());
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace YonatanMankovich.ConsoleDiffWriter
         /// </summary>
         /// <param name="character">The new character to compare the <see cref="WrittenCharacter"/> with.</param>
         /// <returns><see langword="true"/> if they are different; otherwise, <see langword="false"/>.</returns>
-        public bool IsCharDifferentFromWrittenChar(ColorCharacter character)
+        public bool IsCharDifferentFromWrittenChar(ColorChar character)
         {
             return !AlreadyWritten || !character.Equals(WrittenCharacter);
         }
