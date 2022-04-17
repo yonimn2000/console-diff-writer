@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using YonatanMankovich.SimpleColorConsole;
 
-namespace YonatanMankovich.ConsoleDiffWriter
+namespace YonatanMankovich.ConsoleDiffWriter.Color
 {
     /// <summary>
     /// Represents a structure that helps write <see cref="ColorCharDiff"/> more efficiently.

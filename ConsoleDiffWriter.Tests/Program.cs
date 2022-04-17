@@ -1,12 +1,97 @@
 ﻿using System.Drawing;
 using YonatanMankovich.ConsoleDiffWriter;
+using YonatanMankovich.ConsoleDiffWriter.Color;
 using YonatanMankovich.SimpleColorConsole;
 
 RunDiffCharTests();
 RunDiffStringTests();
 RunDiffLinesTests();
 
+RunColorDiffCharTests();
+RunColorDiffStringTests();
+RunColorDiffLinesTests();
+
 void RunDiffCharTests()
+{
+    Console.WriteLine(nameof(CharDiff) + " Tests");
+    Console.WriteLine(new string('-', 35));
+
+    CharDiff diff = new CharDiff();
+    char character = '#';
+
+    diff.WriteDiff(character);
+
+    Thread.Sleep(1000); // Sleep to show change.
+
+    char newCharacter = 'C';
+
+    diff.WriteDiff(newCharacter);
+
+    Console.WriteLine();
+    Console.WriteLine();
+}
+
+void RunDiffStringTests()
+{
+    Console.WriteLine(nameof(StringDiff) + " Tests");
+    Console.WriteLine(new string('-', 35));
+
+    StringDiff diff = new StringDiff();
+    string str = "0123456789";
+    diff.WriteDiff(str);
+
+    Thread.Sleep(1000); // Sleep to show change.
+
+    // Shorter string
+    string shorterStr = "ABC";
+    diff.WriteDiff(shorterStr);
+
+    Thread.Sleep(1000); // Sleep to show change.
+
+    // Longer string
+    string longerStr = "abcdefg";
+    diff.WriteDiff(longerStr);
+
+    Console.WriteLine();
+    Console.WriteLine();
+}
+
+void RunDiffLinesTests()
+{
+    Console.WriteLine(nameof(LinesDiff) + " Tests");
+    Console.WriteLine(new string('-', 35));
+
+    LinesDiff diff = new LinesDiff(new Point(2, Console.CursorTop)); // Test diff at a point.
+    IList<string> lines = new List<string>()
+    {
+        "abcdefghijklmnop",
+        "qrstuvwxyz"
+    };
+
+    diff.WriteDiff(lines);
+    Thread.Sleep(1000); // Sleep to show change
+
+    IList<string> shorterLines = new List<string>()
+    {
+        "0123456789"
+    };
+
+    diff.WriteDiff(shorterLines);
+    Thread.Sleep(1000); // Sleep to show change
+
+    IList<string> longerLines = new List<string>()
+    {
+        "ABCDEFGHIJKLMNOP",
+        "qrstuv",
+        "Hello world"
+    };
+
+    diff.WriteDiff(longerLines);
+
+    Console.WriteLine();
+}
+
+void RunColorDiffCharTests()
 {
     Console.WriteLine(nameof(ColorCharDiff) + " Tests");
     Console.WriteLine(new string('-', 35));
@@ -26,7 +111,7 @@ void RunDiffCharTests()
     Console.WriteLine();
 }
 
-void RunDiffStringTests()
+void RunColorDiffStringTests()
 {
     Console.WriteLine(nameof(ColorStringDiff) + " Tests");
     Console.WriteLine(new string('-', 35));
@@ -51,7 +136,7 @@ void RunDiffStringTests()
     Console.WriteLine();
 }
 
-void RunDiffLinesTests()
+void RunColorDiffLinesTests()
 {
     Console.WriteLine(nameof(ColorLinesDiff) + " Tests");
     Console.WriteLine(new string('-', 35));
