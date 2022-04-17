@@ -8,10 +8,10 @@ RunDiffLinesTests();
 
 void RunDiffCharTests()
 {
-    Console.WriteLine(nameof(ConsoleDiffCharacter) + " Tests");
+    Console.WriteLine(nameof(ColorCharDiff) + " Tests");
     Console.WriteLine(new string('-', 35));
 
-    ConsoleDiffCharacter diff = new ConsoleDiffCharacter();
+    ColorCharDiff diff = new ColorCharDiff();
     ColorChar character = new ColorChar('#', textColor: ConsoleColor.Magenta, backColor: ConsoleColor.Cyan);
 
     diff.WriteDiff(character);
@@ -28,10 +28,10 @@ void RunDiffCharTests()
 
 void RunDiffStringTests()
 {
-    Console.WriteLine(nameof(ConsoleDiffString) + " Tests");
+    Console.WriteLine(nameof(ColorStringDiff) + " Tests");
     Console.WriteLine(new string('-', 35));
 
-    ConsoleDiffString diff = new ConsoleDiffString();
+    ColorStringDiff diff = new ColorStringDiff();
     ColorString str = new ColorString("0123456789", textColor: ConsoleColor.Magenta, backColor: ConsoleColor.Cyan);
     diff.WriteDiff(str);
 
@@ -53,10 +53,10 @@ void RunDiffStringTests()
 
 void RunDiffLinesTests()
 {
-    Console.WriteLine(nameof(ConsoleDiffLines) + " Tests");
+    Console.WriteLine(nameof(ColorLinesDiff) + " Tests");
     Console.WriteLine(new string('-', 35));
 
-    ConsoleDiffLines diff = new ConsoleDiffLines(new Point(2, Console.CursorTop));
+    ColorLinesDiff diff = new ColorLinesDiff(new Point(2, Console.CursorTop));
     ColorLines lines = new ColorLines()
         .AddLine(new ColorString("abcdefg") + new ColorString("hijklmnop", ConsoleColor.Magenta))
         .AddLine(new ColorString("qrstuv", ConsoleColor.Black, ConsoleColor.Yellow)

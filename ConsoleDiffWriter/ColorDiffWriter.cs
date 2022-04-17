@@ -4,26 +4,26 @@ using YonatanMankovich.SimpleColorConsole;
 namespace YonatanMankovich.ConsoleDiffWriter
 {
     /// <summary>
-    /// Represents a structure that helps write <see cref="ConsoleDiffCharacter"/> more efficiently.
+    /// Represents a structure that helps write <see cref="ColorCharDiff"/> more efficiently.
     /// </summary>
-    internal class DiffWriter : ContinuousColorConsoleWriter, IDisposable
+    internal class ColorDiffWriter : ContinuousColorConsoleWriter, IDisposable
     {
         private Point? LastPoint { get; set; }
 
         /// <summary>
-        /// Initializes an instance of the <see cref="DiffWriter"/> class 
+        /// Initializes an instance of the <see cref="ColorDiffWriter"/> class 
         /// and saves the relevant <see cref="Console"/> properties.
         /// </summary>
-        public DiffWriter() : base() { }
+        public ColorDiffWriter() : base() { }
 
         /// <summary>
-        /// Writes the difference between the given <see cref="ConsoleDiffCharacter"/> and the 
+        /// Writes the difference between the given <see cref="ColorCharDiff"/> and the 
         /// <see cref="ColorChar"/> without moving the cursor position or changing the console 
         /// colors unless needed based on the previously written <see cref="ColorChar"/>.
         /// </summary>
-        /// <param name="diffChar">The <see cref="ConsoleDiffCharacter"/>.</param>
+        /// <param name="diffChar">The <see cref="ColorCharDiff"/>.</param>
         /// <param name="newChar">The new <see cref="ColorChar"/>.</param>
-        public void WriteDiff(ConsoleDiffCharacter diffChar, ColorChar newChar)
+        public void WriteDiff(ColorCharDiff diffChar, ColorChar newChar)
         {
             if (diffChar.IsCharDifferentFromWrittenChar(newChar))
             {

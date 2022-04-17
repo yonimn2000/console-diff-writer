@@ -9,7 +9,7 @@ namespace YonatanMankovich.ConsoleDiffWriter
     /// written to the console at a specific point and can write just the difference
     /// between it and a new <see cref="ColorString"/>.
     /// </summary>
-    public class ConsoleDiffString : IEnumerable<ConsoleDiffCharacter>
+    public class ColorStringDiff : IEnumerable<ColorCharDiff>
     {
         /// <summary>
         /// The point on the console to which to write the <see cref="ColorString"/> to.
@@ -20,34 +20,34 @@ namespace YonatanMankovich.ConsoleDiffWriter
         /// The length of the written <see cref="ColorString"/>.
         /// </summary>
         public int Length => WrittenString.Count;
-        private IList<ConsoleDiffCharacter> WrittenString { get; set; }
+        private IList<ColorCharDiff> WrittenString { get; set; }
 
         /// <summary>
-        /// Initializes an instance of the <see cref="ConsoleDiffString"/> with 
+        /// Initializes an instance of the <see cref="ColorStringDiff"/> with 
         /// a <see cref="ColorString"/> and a <see cref="System.Drawing.Point"/>.
         /// </summary>
         /// <param name="point">The point on the console to which to write the <see cref="ColorString"/> to.</param>
         /// <param name="str">The <see cref="ColorString"/> to keep track of.</param>
-        public ConsoleDiffString(Point point, ColorString str) : this(point)
+        public ColorStringDiff(Point point, ColorString str) : this(point)
         {
             for (int i = 0; i < str.Length; i++)
-                WrittenString.Add(new ConsoleDiffCharacter(new Point(point.X + i, point.Y), str[i]));
+                WrittenString.Add(new ColorCharDiff(new Point(point.X + i, point.Y), str[i]));
         }
 
         /// <summary>
-        /// Initializes an empty instance of the <see cref="ConsoleDiffString"/>
+        /// Initializes an empty instance of the <see cref="ColorStringDiff"/>
         /// at the current <see cref="Console"/> cursor position.
         /// </summary>
-        public ConsoleDiffString() : this(new Point(Console.CursorLeft, Console.CursorTop)) { }
+        public ColorStringDiff() : this(new Point(Console.CursorLeft, Console.CursorTop)) { }
 
         /// <summary>
-        /// Initializes an empty instance of the <see cref="ConsoleDiffString"/> with 
+        /// Initializes an empty instance of the <see cref="ColorStringDiff"/> with 
         /// a <see cref="System.Drawing.Point"/> at which to track the diff.
         /// </summary>
         /// <param name="point">The point on the console to which to write the <see cref="ColorString"/> to.</param>
-        public ConsoleDiffString(Point point)
+        public ColorStringDiff(Point point)
         {
-            WrittenString = new List<ConsoleDiffCharacter>();
+            WrittenString = new List<ColorCharDiff>();
             Point = point;
         }
 
@@ -58,12 +58,12 @@ namespace YonatanMankovich.ConsoleDiffWriter
         /// <param name="str">The new <see cref="ColorString"/> to overwrite the written <see cref="ColorString"/> with.</param>
         public void WriteDiff(ColorString str)
         {
-            using (DiffWriter diffWriter = new DiffWriter())
+            using (ColorDiffWriter diffWriter = new ColorDiffWriter())
             {
                 // If the new string is longer than the one written, add space characters
                 // to the end of the previously written string.
                 for (int i = WrittenString.Count; i < str.Length; i++)
-                    WrittenString.Add(new ConsoleDiffCharacter(new Point(Point.X + i, Point.Y), new ColorChar(' ')));
+                    WrittenString.Add(new ColorCharDiff(new Point(Point.X + i, Point.Y), new ColorChar(' ')));
 
                 // Write the diff between all the characters of the two strings.
                 for (int i = 0; i < str.Length; i++)
@@ -101,10 +101,10 @@ namespace YonatanMankovich.ConsoleDiffWriter
 
         /// <summary>
         /// Returns an enumerator the iterates through the collection of 
-        /// <see cref="ConsoleDiffCharacter"/>s of the current <see cref="ConsoleDiffString"/>.
+        /// <see cref="ColorCharDiff"/>s of the current <see cref="ColorStringDiff"/>.
         /// </summary>
-        /// <returns>An enumerator that can be used to iterate through the <see cref="ConsoleDiffString"/>.</returns>
-        public IEnumerator<ConsoleDiffCharacter> GetEnumerator()
+        /// <returns>An enumerator that can be used to iterate through the <see cref="ColorStringDiff"/>.</returns>
+        public IEnumerator<ColorCharDiff> GetEnumerator()
         {
             return WrittenString.GetEnumerator();
         }

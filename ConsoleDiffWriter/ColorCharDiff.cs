@@ -8,7 +8,7 @@ namespace YonatanMankovich.ConsoleDiffWriter
     /// written to the console at a specific point and can write just the difference
     /// between it and a new <see cref="ColorChar"/>.
     /// </summary>
-    public class ConsoleDiffCharacter
+    public class ColorCharDiff
     {
         /// <summary>
         /// The point on the console to which to write the <see cref="ColorChar"/> to.
@@ -23,29 +23,29 @@ namespace YonatanMankovich.ConsoleDiffWriter
         private bool AlreadyWritten { get; set; } = false;
 
         /// <summary>
-        /// Initializes an instance of the <see cref="ConsoleDiffCharacter"/> with 
+        /// Initializes an instance of the <see cref="ColorCharDiff"/> with 
         /// a <see cref="ColorChar"/> and a <see cref="System.Drawing.Point"/>
         /// </summary>
         /// <param name="point">The point on the console to which to write the <see cref="ColorChar"/> to.</param>
         /// <param name="character">The <see cref="ColorChar"/> to keep track of.</param>
-        public ConsoleDiffCharacter(Point point, ColorChar character)
+        public ColorCharDiff(Point point, ColorChar character)
         {
             WrittenCharacter = character;
             Point = point;
         }
 
         /// <summary>
-        /// Initializes an empty instance of the <see cref="ConsoleDiffCharacter"/>
+        /// Initializes an empty instance of the <see cref="ColorCharDiff"/>
         /// at the current <see cref="Console"/> cursor position.
         /// </summary>
-        public ConsoleDiffCharacter() : this(new Point(Console.CursorLeft, Console.CursorTop)) { }
+        public ColorCharDiff() : this(new Point(Console.CursorLeft, Console.CursorTop)) { }
 
         /// <summary>
-        /// Initializes an empty instance of the <see cref="ConsoleDiffCharacter"/> with 
+        /// Initializes an empty instance of the <see cref="ColorCharDiff"/> with 
         /// a <see cref="System.Drawing.Point"/> at which to track the diff.
         /// </summary>
         /// <param name="point">The point on the console to which to write the <see cref="ColorChar"/> to.</param>
-        public ConsoleDiffCharacter(Point point)
+        public ColorCharDiff(Point point)
         {
             WrittenCharacter = new ColorChar();
             Point = point;

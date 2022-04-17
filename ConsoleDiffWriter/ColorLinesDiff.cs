@@ -5,44 +5,44 @@ using YonatanMankovich.SimpleColorConsole;
 namespace YonatanMankovich.ConsoleDiffWriter
 {
     /// <summary>
-    /// Represents a structure that keeps track of a <see cref="ConsoleDiffLines"/> 
+    /// Represents a structure that keeps track of a <see cref="ColorLinesDiff"/> 
     /// written to the console at a specific point and can write just the difference
     /// between it and a new <see cref="ColorLines"/>.
     /// </summary>
-    public class ConsoleDiffLines : IEnumerable<ConsoleDiffString>
+    public class ColorLinesDiff : IEnumerable<ColorStringDiff>
     {
         /// <summary>
         /// The point on the console to which to write the <see cref="ColorLines"/> to.
         /// </summary>
         public Point Point { get; }
-        private IList<ConsoleDiffString> WrittenLines { get; set; }
+        private IList<ColorStringDiff> WrittenLines { get; set; }
 
         /// <summary>
-        /// Initializes an instance of the <see cref="ConsoleDiffLines"/> with 
+        /// Initializes an instance of the <see cref="ColorLinesDiff"/> with 
         /// a <see cref="ColorLines"/> and a <see cref="System.Drawing.Point"/>
         /// </summary>
         /// <param name="point">The point on the console to which to write the <see cref="ColorLines"/> to.</param>
         /// <param name="lines">The <see cref="ColorLines"/> to keep track of.</param>
-        public ConsoleDiffLines(Point point, ColorLines lines) : this(point)
+        public ColorLinesDiff(Point point, ColorLines lines) : this(point)
         {
             for (int i = 0; i < lines.Count; i++)
-                WrittenLines.Add(new ConsoleDiffString(new Point(point.X, point.Y + i), lines[i]));
+                WrittenLines.Add(new ColorStringDiff(new Point(point.X, point.Y + i), lines[i]));
         }
 
         /// <summary>
-        /// Initializes an empty instance of the <see cref="ConsoleDiffLines"/>
+        /// Initializes an empty instance of the <see cref="ColorLinesDiff"/>
         /// at the current <see cref="Console"/> cursor position.
         /// </summary>
-        public ConsoleDiffLines() : this(new Point(Console.CursorLeft, Console.CursorTop)) { }
+        public ColorLinesDiff() : this(new Point(Console.CursorLeft, Console.CursorTop)) { }
 
         /// <summary>
-        /// Initializes an empty instance of the <see cref="ConsoleDiffLines"/> with
+        /// Initializes an empty instance of the <see cref="ColorLinesDiff"/> with
         /// a <see cref="System.Drawing.Point"/> at which to track the diff.
         /// </summary>
         /// <param name="point">The point on the console to which to write the <see cref="ColorLines"/> to.</param>
-        public ConsoleDiffLines(Point point)
+        public ColorLinesDiff(Point point)
         {
-            WrittenLines = new List<ConsoleDiffString>();
+            WrittenLines = new List<ColorStringDiff>();
             Point = point;
         }
 
@@ -55,7 +55,7 @@ namespace YonatanMankovich.ConsoleDiffWriter
         {
             // If the new area has more lines than the one written, add blank lines to the end of the previously written area.
             for (int i = WrittenLines.Count; i < lines.Count; i++)
-                WrittenLines.Add(new ConsoleDiffString(new Point(Point.X, Point.Y + i), new ColorString()));
+                WrittenLines.Add(new ColorStringDiff(new Point(Point.X, Point.Y + i), new ColorString()));
 
             // Write the diff between all the lines of the two areas.
             for (int i = 0; i < lines.Count; i++)
@@ -102,10 +102,10 @@ namespace YonatanMankovich.ConsoleDiffWriter
 
         /// <summary>
         /// Returns an enumerator the iterates through the collection of 
-        /// <see cref="ConsoleDiffString"/> lines of the current <see cref="ConsoleDiffLines"/>.
+        /// <see cref="ColorStringDiff"/> lines of the current <see cref="ColorLinesDiff"/>.
         /// </summary>
-        /// <returns>An enumerator that can be used to iterate through the <see cref="ConsoleDiffLines"/>.</returns>
-        public IEnumerator<ConsoleDiffString> GetEnumerator()
+        /// <returns>An enumerator that can be used to iterate through the <see cref="ColorLinesDiff"/>.</returns>
+        public IEnumerator<ColorStringDiff> GetEnumerator()
         {
             return WrittenLines.GetEnumerator();
         }
