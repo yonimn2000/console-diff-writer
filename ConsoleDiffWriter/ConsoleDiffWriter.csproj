@@ -8,14 +8,30 @@
     <RootNamespace>YonatanMankovich.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <Company>$(Authors)</Company>
-    <Copyright>Copyright © $(Authors) 2022</Copyright>
+    <Copyright>Copyright © Yonatan Mankovich 2022</Copyright>
     <Authors>Yonatan Mankovich</Authors>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>YonatanMankovich.ConsoleDiffWriter</Title>
+    <Description>A library that helps keep track of text written to the console and efficiently writes only the difference with the updated text instead of rewriting all of it.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <RepositoryUrl>https://github.com/yonimn2000/console-diff-writer</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="YonatanMankovich.SimpleColorConsole">
-      <HintPath>..\..\SimpleColorConsole\SimpleColorConsole\bin\Debug\net6.0\YonatanMankovich.SimpleColorConsole.dll</HintPath>
-    </Reference>
+    <None Include="..\LICENSE.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="YonatanMankovich.SimpleColorConsole" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
