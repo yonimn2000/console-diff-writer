@@ -20,6 +20,7 @@
     <Version>1.0.2</Version>
     <AssemblyVersion>$(PackageVersion)</AssemblyVersion>
     <FileVersion>$(PackageVersion)</FileVersion>
+    <PackageId>YonatanMankovich.ConsoleDiffWriter</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
