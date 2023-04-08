@@ -132,6 +132,13 @@ void RunColorDiffStringTests()
     ColorString longerStr = new ColorString("abcdefg", textColor: ConsoleColor.DarkCyan, backColor: ConsoleColor.Red);
     diff.WriteDiff(longerStr);
 
+    Thread.Sleep(1000); // Sleep to show change.
+
+    // Colorless string
+    ColorString colorlessStr = new ColorString("abcdefg");
+    colorlessStr[3] = new ColorChar('X', textColor: ConsoleColor.Red, backColor: ConsoleColor.White);
+    diff.WriteDiff(colorlessStr);
+
     Console.WriteLine();
     Console.WriteLine();
 }
@@ -148,18 +155,30 @@ void RunColorDiffLinesTests()
            + new ColorString("wxyz", ConsoleColor.Black, ConsoleColor.Cyan));
 
     diff.WriteDiff(lines);
+
     Thread.Sleep(1000); // Sleep to show change
 
     ColorLines shorterLines = new ColorLines()
         .AddLine(new ColorString("0123456789", ConsoleColor.DarkCyan, ConsoleColor.DarkMagenta));
 
     diff.WriteDiff(shorterLines);
+
     Thread.Sleep(1000); // Sleep to show change
 
     ColorLines longerLines = new ColorLines()
         .AddLine(new ColorString("ABCDEFGHIJKLMNOP", ConsoleColor.Yellow, ConsoleColor.Blue))
         .AddLine(new ColorString("qrstuv", ConsoleColor.Black, ConsoleColor.Yellow))
         .AddLine(new ColorString("Hello", ConsoleColor.Black, ConsoleColor.Green)
+            + ' ' + new ColorString("world", ConsoleColor.DarkGreen, ConsoleColor.Gray));
+
+    diff.WriteDiff(longerLines);
+
+    Thread.Sleep(1000); // Sleep to show change
+
+    ColorLines colorlessLines = new ColorLines()
+        .AddLine(new ColorString("ABCDEFGHIJKLMNOP"))
+        .AddLine(new ColorString("qrstuv", ConsoleColor.Black, ConsoleColor.Yellow))
+        .AddLine(new ColorString("Hello")
             + ' ' + new ColorString("world", ConsoleColor.DarkGreen, ConsoleColor.Gray));
 
     diff.WriteDiff(longerLines);

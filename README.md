@@ -1,8 +1,9 @@
 # Console Diff Writer
 
-A library that helps keep track of text written to the console and efficiently writes only the difference with the updated text instead of rewriting all of it.
+[![.NuGet Publish](https://github.com/yonimn2000/console-diff-writer/actions/workflows/nuget-publish.yml/badge.svg)](https://github.com/yonimn2000/console-diff-writer/actions/workflows/nuget-publish.yml)
+[![NuGet](https://img.shields.io/nuget/v/YonatanMankovich.ConsoleDiffWriter.svg)](https://www.nuget.org/packages/YonatanMankovich.ConsoleDiffWriter)
 
-The NuGet package is available [here](https://www.nuget.org/packages/YonatanMankovich.ConsoleDiffWriter/).
+A library that helps keep track of text written to the console and efficiently writes only the difference with the updated text instead of rewriting all of it.
 
 ## Getting Started Examples
 
