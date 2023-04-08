@@ -2,6 +2,8 @@
 
 A library that helps keep track of text written to the console and efficiently writes only the difference with the updated text instead of rewriting all of it.
 
+The NuGet package is available [here](https://www.nuget.org/packages/YonatanMankovich.ConsoleDiffWriter/).
+
 ## Getting Started Examples
 
 Note that if a `Point` is not specified in the `Diff` constructor, the diff will be tracked starting the current `Console` cursor position.
